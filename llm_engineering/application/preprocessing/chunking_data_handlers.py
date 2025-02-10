@@ -3,12 +3,13 @@ from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 from uuid import UUID
 
-from llm_engineering.domain.chunks import ArticleChunk, Chunk, PostChunk, RepositoryChunk
+from llm_engineering.domain.chunks import ArticleChunk, Chunk, PostChunk, RepositoryChunk, YouTubeChunk
 from llm_engineering.domain.cleaned_documents import (
     CleanedArticleDocument,
     CleanedDocument,
     CleanedPostDocument,
     CleanedRepositoryDocument,
+    CleanedYouTubeDocument,
 )
 
 from .operations import chunk_article, chunk_text
@@ -61,6 +62,38 @@ class PostChunkingHandler(ChunkingDataHandler):
                 author_id=data_model.author_id,
                 author_full_name=data_model.author_full_name,
                 image=data_model.image if data_model.image else None,
+                metadata=self.metadata,
+            )
+            data_models_list.append(model)
+
+        return data_models_list
+
+
+class YouTubeChunkingHandler(ChunkingDataHandler):
+    @property
+    def metadata(self) -> dict:
+        return {
+            "chunk_size": 250,
+            "chunk_overlap": 25,
+        }
+
+    def chunk(self, data_model: CleanedYouTubeDocument) -> list[YouTubeChunk]:
+        data_models_list = []
+
+        cleaned_content = data_model.content
+        chunks = chunk_text(
+            cleaned_content, chunk_size=self.metadata["chunk_size"], chunk_overlap=self.metadata["chunk_overlap"]
+        )
+
+        for chunk in chunks:
+            chunk_id = hashlib.md5(chunk.encode()).hexdigest()
+            model = PostChunk(
+                id=UUID(chunk_id, version=4),
+                content=chunk,
+                platform=data_model.platform,
+                document_id=data_model.id,
+                author_id=data_model.author_id,
+                author_full_name=data_model.author_full_name,
                 metadata=self.metadata,
             )
             data_models_list.append(model)

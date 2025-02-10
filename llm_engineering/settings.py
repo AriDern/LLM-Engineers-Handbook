@@ -35,7 +35,8 @@ class Settings(BaseSettings):
     QDRANT_APIKEY: str | None = None
 
     # AWS Authentication
-    AWS_REGION: str = "eu-central-1"
+    AWS_REGION: str = "us-east-1"
+    AWS_DEFAULT_REGION: str = "us-east-1"
     AWS_ACCESS_KEY: str | None = None
     AWS_SECRET_KEY: str | None = None
     AWS_ARN_ROLE: str | None = None
@@ -74,8 +75,8 @@ class Settings(BaseSettings):
             "gpt-3.5-turbo": 16385,
             "gpt-4-turbo": 128000,
             "gpt-4o": 128000,
-            "gpt-4o-mini": 128000,
-        }.get(self.OPENAI_MODEL_ID, 128000)
+            "gpt-4o-mini": 10000,
+        }.get(self.OPENAI_MODEL_ID, 10000)
 
         max_token_window = int(official_max_token_window * 0.90)
 

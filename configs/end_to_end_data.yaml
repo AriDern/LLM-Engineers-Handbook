@@ -1,6 +1,6 @@
 settings:
   docker:
-    parent_image: 992382797823.dkr.ecr.eu-central-1.amazonaws.com/zenml-rlwlcs:latest
+    parent_image: 794038240560.dkr.ecr.us-east-1.amazonaws.com/zenml-bsxgns:latest
     skip_build: True
   orchestrator.sagemaker:
     synchronous: false
@@ -55,6 +55,8 @@ parameters:
         - https://decodingml.substack.com/p/dml-top-6-ml-platform-features-you?r=1ttoeh
     - user_full_name: Maxime Labonne # [First Name(s)] [Last Name]
       links:
+        # YouTube
+        - https://www.youtube.com/watch?v=nemcs1OJrcM
         # Substack
         - https://maximelabonne.substack.com/p/uncensor-any-llm-with-abliteration-d30148b7d43e
         - https://maximelabonne.substack.com/p/create-mixtures-of-experts-with-mergekit-11b318c99562

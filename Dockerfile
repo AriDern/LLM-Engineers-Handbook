@@ -45,3 +45,4 @@ RUN poetry config virtualenvs.create false && \
 
 # Copy the rest of the code.
 COPY . $WORKSPACE_ROOT
+COPY cookies.txt /app/youtube_cookies.txt

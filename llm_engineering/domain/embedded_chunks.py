@@ -47,6 +47,15 @@ class EmbeddedArticleChunk(EmbeddedChunk):
         use_vector_index = True
 
 
+class EmbeddedYouTubeChunk(EmbeddedChunk):
+    link: str
+
+    class Config:
+        name = "embedded_youtubes"
+        category = DataCategory.YOUTUBE
+        use_vector_index = True
+
+
 class EmbeddedRepositoryChunk(EmbeddedChunk):
     name: str
     link: str

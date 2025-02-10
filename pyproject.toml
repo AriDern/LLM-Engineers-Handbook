@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "~3.11"
-zenml = { version = "0.67.0", extras = ["server"] }
+zenml = "0.73.0"
 pymongo = "^4.6.2"
 click = "^8.0.1"
 loguru = "^0.7.2"
@@ -41,6 +41,13 @@ langchain-community = "^0.2.11"
 fastapi = ">=0.100,<=0.110"
 uvicorn = "^0.30.6"
 opik = "^0.2.2"
+torch = "^2.6.0"
+torchvision = "^0.21.0"
+torchaudio = "^2.6.0"
+yt-dlp = "^2025.1.26"
+openai-whisper = "^20240930"
+pyannote-audio = "^3.3.2"
+pytube = "^15.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -99,10 +106,13 @@ call-inference-ml-service = "curl -X POST 'http://127.0.0.1:8000/rag' -H 'Conten
 local-docker-infrastructure-up = "docker compose up -d"
 local-docker-infrastructure-down = "docker compose stop"
 local-zenml-server-down = "poetry run zenml down"
+local-zenml-create-account = "zenml user create admin --password mypassword"
+local-zenml-loginto-account = "zenml login --username admin --password mypassword"
+local-zenml-connect-local = "poetry run zenml connect --url http://localhost:8240"
 local-infrastructure-up = [
     "local-docker-infrastructure-up",
     "local-zenml-server-down",
-    "local-zenml-server-up",
+    "local-zenml-connect-local",
 ]
 local-infrastructure-down = [
     "local-docker-infrastructure-down",
@@ -145,8 +155,9 @@ case = "darwin"
 env = { OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES" }
 cmd = "poetry run zenml up"
 
+
 [[tool.poe.tasks.local-zenml-server-up.switch]]
-cmd = "poetry run zenml up"
+cmd = "poetry run zenml up --docker --image zenmldocker/zenml-server:latest"
 
 # Tests
 [tool.poe.tasks.test]

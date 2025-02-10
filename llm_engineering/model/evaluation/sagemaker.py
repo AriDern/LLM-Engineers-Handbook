@@ -2,6 +2,7 @@ from pathlib import Path
 
 from huggingface_hub import HfApi
 from loguru import logger
+import boto3
 
 try:
     from sagemaker.huggingface import HuggingFaceProcessor
@@ -18,6 +19,9 @@ def run_evaluation_on_sagemaker(is_dummy: bool = True) -> None:
     assert settings.HUGGINGFACE_ACCESS_TOKEN, "Hugging Face access token is required."
     assert settings.OPENAI_API_KEY, "OpenAI API key is required."
     assert settings.AWS_ARN_ROLE, "AWS ARN role is required."
+
+    # Ensure boto3 uses the correct region
+    boto3.setup_default_session(region_name="us-east-1")
 
     if not evaluation_dir.exists():
         raise FileNotFoundError(f"The directory {evaluation_dir} does not exist.")
@@ -42,7 +46,7 @@ def run_evaluation_on_sagemaker(is_dummy: bool = True) -> None:
     hfp = HuggingFaceProcessor(
         role=settings.AWS_ARN_ROLE,
         instance_count=1,
-        instance_type="ml.g5.2xlarge",
+        instance_type="ml.g5.xlarge",
         transformers_version="4.36",
         pytorch_version="2.1",
         py_version="py310",

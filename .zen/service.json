@@ -1,0 +1,65 @@
+{
+    "type": "zenml.zen_server.deploy.docker.docker_zen_server.DockerZenServer",
+    "uuid": "e64a8ce7-4459-4d18-9538-7d56a3444d55",
+    "admin_state": "active",
+    "config": {
+        "type": "zenml.zen_server.deploy.docker.docker_zen_server.DockerZenServerConfig",
+        "name": "zenml-1",
+        "description": "",
+        "pipeline_name": "",
+        "pipeline_step_name": "",
+        "model_name": "",
+        "model_version": "",
+        "service_name": "zenml-1",
+        "root_runtime_path": "C:\\Users\\arist\\AppData\\Roaming\\zenml\\zen_server\\docker",
+        "singleton": true,
+        "image": "zenmldocker/zenml-server:latest",
+        "server": {
+            "name": "zenml-1",
+            "provider": "docker",
+            "port": 8240,
+            "image": "zenmldocker/zenml-server:latest",
+            "store": null,
+            "use_legacy_dashboard": false
+        },
+        "args": []
+    },
+    "status": {
+        "type": "zenml.services.container.container_service.ContainerServiceStatus",
+        "state": "pending_startup",
+        "last_state": "inactive",
+        "last_error": "",
+        "runtime_path": "C:\\Users\\arist\\AppData\\Roaming\\zenml\\zen_server\\docker"
+    },
+    "endpoint": {
+        "type": "zenml.services.container.container_service_endpoint.ContainerServiceEndpoint",
+        "admin_state": "inactive",
+        "config": {
+            "type": "zenml.services.container.container_service_endpoint.ContainerServiceEndpointConfig",
+            "name": "ContainerServiceEndpoint",
+            "description": "",
+            "protocol": "http",
+            "port": 8240,
+            "allocate_port": false
+        },
+        "status": {
+            "type": "zenml.services.container.container_service_endpoint.ContainerServiceEndpointStatus",
+            "state": "inactive",
+            "last_state": "inactive",
+            "last_error": "",
+            "protocol": "http",
+            "hostname": "127.0.0.1",
+            "port": 8240
+        },
+        "monitor": {
+            "type": "zenml.services.service_monitor.HTTPEndpointHealthMonitor",
+            "config": {
+                "type": "zenml.services.service_monitor.HTTPEndpointHealthMonitorConfig",
+                "healthcheck_uri_path": "health",
+                "use_head_request": true,
+                "http_status_code": 200,
+                "http_timeout": 5
+            }
+        }
+    }
+}

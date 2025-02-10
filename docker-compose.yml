@@ -1,10 +1,25 @@
 services:
+  zenml:
+    image: zenmldocker/zenml-server:latest
+    container_name: "zenml-1"
+    hostname: "zenml-1"
+    entrypoint: ["uvicorn"]
+    command: ["zenml.zen_server.zen_server_api:app", "--host", "0.0.0.0", "--port", "8240"]
+    environment:
+      - ZENML_AUTH_ENABLED=false
+    volumes:
+      - C:\Users\arist\Desktop\LLM_Project\LLM-Engineers-Handbook\.zen\service.json:/service
+      - C:\Users\arist\AppData\Roaming\zenml\config.yaml:/zenconfig
+    networks:
+      - local
+    ports:
+      - 8240:8240
   mongo:
     image: mongo:latest
     container_name: "llm_engineering_mongo"
     logging:
       options:
-        max-size: 1g
+        max-size: 0.5g
     environment:
       MONGO_INITDB_ROOT_USERNAME: "llm_engineering"
       MONGO_INITDB_ROOT_PASSWORD: "llm_engineering"

@@ -32,6 +32,15 @@ class CleanedArticleDocument(CleanedDocument):
         use_vector_index = False
 
 
+class CleanedYouTubeDocument(CleanedDocument):
+    link: str
+
+    class Config:
+        name = "cleaned_youtubes"
+        category = DataCategory.YOUTUBE
+        use_vector_index = False
+
+
 class CleanedRepositoryDocument(CleanedDocument):
     name: str
     link: str

@@ -2,12 +2,13 @@ from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, cast
 
 from llm_engineering.application.networks import EmbeddingModelSingleton
-from llm_engineering.domain.chunks import ArticleChunk, Chunk, PostChunk, RepositoryChunk
+from llm_engineering.domain.chunks import ArticleChunk, Chunk, PostChunk, RepositoryChunk, YouTubeChunk
 from llm_engineering.domain.embedded_chunks import (
     EmbeddedArticleChunk,
     EmbeddedChunk,
     EmbeddedPostChunk,
     EmbeddedRepositoryChunk,
+    EmbeddedYouTubeChunk,
 )
 from llm_engineering.domain.queries import EmbeddedQuery, Query
 
@@ -61,6 +62,24 @@ class QueryEmbeddingHandler(EmbeddingDataHandler):
 class PostEmbeddingHandler(EmbeddingDataHandler):
     def map_model(self, data_model: PostChunk, embedding: list[float]) -> EmbeddedPostChunk:
         return EmbeddedPostChunk(
+            id=data_model.id,
+            content=data_model.content,
+            embedding=embedding,
+            platform=data_model.platform,
+            document_id=data_model.document_id,
+            author_id=data_model.author_id,
+            author_full_name=data_model.author_full_name,
+            metadata={
+                "embedding_model_id": embedding_model.model_id,
+                "embedding_size": embedding_model.embedding_size,
+                "max_input_length": embedding_model.max_input_length,
+            },
+        )
+
+
+class YouTubeEmbeddingHandler(EmbeddingDataHandler):
+    def map_model(self, data_model: YouTubeChunk, embedding: list[float]) -> EmbeddedYouTubeChunk:
+        return EmbeddedYouTubeChunk(
             id=data_model.id,
             content=data_model.content,
             embedding=embedding,

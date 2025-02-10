@@ -2,6 +2,7 @@ from pathlib import Path
 
 from huggingface_hub import HfApi
 from loguru import logger
+import boto3
 
 try:
     from sagemaker.huggingface import HuggingFace
@@ -24,6 +25,9 @@ def run_finetuning_on_sagemaker(
 ) -> None:
     assert settings.HUGGINGFACE_ACCESS_TOKEN, "Hugging Face access token is required."
     assert settings.AWS_ARN_ROLE, "AWS ARN role is required."
+
+    # Ensure boto3 uses the correct region
+    boto3.setup_default_session(region_name="us-east-1")
 
     if not finetuning_dir.exists():
         raise FileNotFoundError(f"The directory {finetuning_dir} does not exist.")
@@ -50,7 +54,7 @@ def run_finetuning_on_sagemaker(
     huggingface_estimator = HuggingFace(
         entry_point="finetune.py",
         source_dir=str(finetuning_dir),
-        instance_type="ml.g5.2xlarge",
+        instance_type="ml.g5.xlarge",
         instance_count=1,
         role=settings.AWS_ARN_ROLE,
         transformers_version="4.36",

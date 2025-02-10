@@ -8,6 +8,7 @@ from .custom_article import CustomArticleCrawler
 from .github import GithubCrawler
 from .linkedin import LinkedInCrawler
 from .medium import MediumCrawler
+from .youtube import YouTubeCrawler
 
 
 class CrawlerDispatcher:
@@ -27,6 +28,11 @@ class CrawlerDispatcher:
 
     def register_linkedin(self) -> "CrawlerDispatcher":
         self.register("https://linkedin.com", LinkedInCrawler)
+
+        return self
+
+    def register_youtube(self) -> "CrawlerDispatcher":
+        self.register("https://youtube.com", YouTubeCrawler)
 
         return self
 

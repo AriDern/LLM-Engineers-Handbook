@@ -8,12 +8,14 @@ from .chunking_data_handlers import (
     ChunkingDataHandler,
     PostChunkingHandler,
     RepositoryChunkingHandler,
+    YouTubeChunkingHandler,
 )
 from .cleaning_data_handlers import (
     ArticleCleaningHandler,
     CleaningDataHandler,
     PostCleaningHandler,
     RepositoryCleaningHandler,
+    YouTubeCleaningHandler,
 )
 from .embedding_data_handlers import (
     ArticleEmbeddingHandler,
@@ -21,6 +23,7 @@ from .embedding_data_handlers import (
     PostEmbeddingHandler,
     QueryEmbeddingHandler,
     RepositoryEmbeddingHandler,
+    YouTubeEmbeddingHandler,
 )
 
 
@@ -33,6 +36,8 @@ class CleaningHandlerFactory:
             return ArticleCleaningHandler()
         elif data_category == DataCategory.REPOSITORIES:
             return RepositoryCleaningHandler()
+        elif data_category == DataCategory.YOUTUBE:
+            return YouTubeCleaningHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -64,6 +69,8 @@ class ChunkingHandlerFactory:
             return ArticleChunkingHandler()
         elif data_category == DataCategory.REPOSITORIES:
             return RepositoryChunkingHandler()
+        elif data_category == DataCategory.YOUTUBE:
+            return YouTubeChunkingHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -97,6 +104,8 @@ class EmbeddingHandlerFactory:
             return ArticleEmbeddingHandler()
         elif data_category == DataCategory.REPOSITORIES:
             return RepositoryEmbeddingHandler()
+        elif data_category == DataCategory.YOUTUBE:
+            return YouTubeEmbeddingHandler()
         else:
             raise ValueError("Unsupported data type")
 
